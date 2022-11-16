@@ -20,6 +20,6 @@
 * Pygame
 * Player input
 
-# K-Slayer:
+## K-Slayer:
 * ggsolver stuff
 * cpu player
