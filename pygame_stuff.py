@@ -41,3 +41,14 @@ def inaccessible_tiles(entities):
         list_.append(sprite.get_pos())
 
     return list_
+
+def clicked_on(x, y, target, tile_size):
+    t_x, t_y = target.get_pos()
+
+    tile_x = x // tile_size
+    tile_y = y // tile_size
+
+    if tile_x == t_x and tile_y == t_y:
+        return True
+    else:
+        return False

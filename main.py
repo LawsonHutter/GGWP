@@ -46,14 +46,25 @@ if __name__ == '__main__':
             # Controls For Player Action
             if event.type == pygame.KEYDOWN:
                 # Movement
-                if event.key == pygame.K_w: champ.delta("N", pygame_stuff.inaccessible_tiles(entities))
-                if event.key == pygame.K_s: champ.delta("S", pygame_stuff.inaccessible_tiles(entities))
-                if event.key == pygame.K_a: champ.delta("W", pygame_stuff.inaccessible_tiles(entities))
-                if event.key == pygame.K_d: champ.delta("E", pygame_stuff.inaccessible_tiles(entities))
+                if event.key == pygame.K_w: champ.delta("N", pygame_stuff.inaccessible_tiles(entities), cpu)
+                if event.key == pygame.K_s: champ.delta("S", pygame_stuff.inaccessible_tiles(entities), cpu)
+                if event.key == pygame.K_a: champ.delta("W", pygame_stuff.inaccessible_tiles(entities), cpu)
+                if event.key == pygame.K_d: champ.delta("E", pygame_stuff.inaccessible_tiles(entities), cpu)
 
                 # Actions
                 if event.key == pygame.K_f: champ.delta("Flash", pygame_stuff.inaccessible_tiles(entities))
 
+            # If right mouse button is pressed
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 3:
+                x_mouse, y_mouse = pygame.mouse.get_pos()
+
+                # if you clicked on cpu, send to delta to auto cpu if cpu is adjacent
+                if pygame_stuff.clicked_on(x_mouse, y_mouse, cpu, tile_size):
+                   champ.delta("Auto", pygame_stuff.inaccessible_tiles(entities), cpu)
+
+                    # same concept for nexus
+                if pygame_stuff.clicked_on(x_mouse, y_mouse, Red_Nex, tile_size):
+                    champ.delta("Auto", pygame_stuff.inaccessible_tiles(entities), Red_Nex)
 
         # ALL CODE TO DRAW SHOULD GO BELOW THIS COMMENT
         # Clear

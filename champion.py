@@ -20,6 +20,10 @@ class champion(pygame.sprite.Sprite):
         self.mapX = map_size[0]
         self.mapY = map_size[1]
 
+        # Attacking member variables
+        self.attack_frame = 0
+        self.frozen = False
+
         # Determine Initial Positioning
         if champ == "Garen_Blue":
             self.x = 2
@@ -32,13 +36,16 @@ class champion(pygame.sprite.Sprite):
         # Update Position
         self.rect = pygame.Rect(self.x * self.tile_size, self.y * self.tile_size, 0, 0)
         self.image = pygame.image.load("Textures/" + self.type + "/" + self.direction + ".png").convert_alpha()
+        self.attack_animation()
 
     # List of possible Actions
     def actions(self):
         return ["Auto", "SkillShot", "Flash", "N", "E", "S", "W"]
 
-    def delta(self, action, inaccessible_tiles):
+    def delta(self, action, inaccessible_tiles, target):
         pos = self.get_pos()
+
+        if self.frozen: pass
 
         if action == "N":
             self.direction = "up"
@@ -91,5 +98,60 @@ class champion(pygame.sprite.Sprite):
                 else:
                     self.delta("W", inaccessible_tiles)
 
+        elif action == "Auto":
+            tar_x, tar_y = target.get_pos()
+
+            # Attack in 4 directions only
+            if (tar_x, tar_y) == (self.x, self.y - 1):
+                self.direction = "up"
+                self.hit(target)
+                self.attack_frame = 4
+
+            elif (tar_x, tar_y) == (self.x, self.y + 1):
+                self.direction = "down"
+                self.hit(target)
+                self.attack_frame = 4
+
+            elif (tar_x, tar_y) == (self.x - 1, self.y):
+                self.direction = "left"
+                self.hit(target)
+                self.attack_frame = 4
+
+            elif (tar_x, tar_y) == (self.x + 1, self.y):
+                self.direction = "right"
+                self.hit(target)
+                self.attack_frame = 4
+
+
     def get_pos(self):
         return self.x, self.y
+
+    def hit(self, target):
+        target.health = target.health-1
+
+    def attack_animation(self):  # NEEDS DIRECTION...
+        if self.attack_frame == 0:
+            self.frozen = False
+
+        else:
+            self.frozen = True
+
+            if self.attack_frame == 4:
+                self.x += 0.25
+                self.y += 0.25
+                self.attack_frame = self.attack_frame - 1
+
+            if self.attack_frame == 3:
+                self.x += 0.25
+                self.y += 0.25
+                self.attack_frame = self.attack_frame - 1
+
+            if self.attack_frame == 2:
+                self.x -= 0.25
+                self.y -= 0.25
+                self.attack_frame = self.attack_frame - 1
+
+            if self.attack_frame == 1:
+                self.x -= 0.25
+                self.y -= 0.25
+                self.attack_frame = self.attack_frame - 1
