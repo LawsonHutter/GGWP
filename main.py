@@ -1,6 +1,7 @@
 import pygame
 import pygame_stuff
 from champion import champion
+from nexus import nexus
 
 if __name__ == '__main__':
 
@@ -20,8 +21,17 @@ if __name__ == '__main__':
 
     # Add Sprites
     champ = champion("Garen_Blue", player_map_size)
+    cpu = champion("Garen_Orange", player_map_size)
+
+    Blue_Nex = nexus("Blue", player_map_size)
+    Red_Nex = nexus("Red", player_map_size)
+
     entities = pygame.sprite.Group()
     entities.add(champ)
+    entities.add(cpu)
+    entities.add(Blue_Nex)
+    entities.add(Red_Nex)
+
     entities.draw(screen)
 
     # -------- Main Program Loop -----------
@@ -36,13 +46,13 @@ if __name__ == '__main__':
             # Controls For Player Action
             if event.type == pygame.KEYDOWN:
                 # Movement
-                if event.key == pygame.K_w: champ.delta("N")
-                if event.key == pygame.K_s: champ.delta("S")
-                if event.key == pygame.K_a: champ.delta("W")
-                if event.key == pygame.K_d: champ.delta("E")
+                if event.key == pygame.K_w: champ.delta("N", pygame_stuff.inaccessible_tiles(entities))
+                if event.key == pygame.K_s: champ.delta("S", pygame_stuff.inaccessible_tiles(entities))
+                if event.key == pygame.K_a: champ.delta("W", pygame_stuff.inaccessible_tiles(entities))
+                if event.key == pygame.K_d: champ.delta("E", pygame_stuff.inaccessible_tiles(entities))
 
                 # Actions
-                if event.key == pygame.K_f: champ.delta("Flash")
+                if event.key == pygame.K_f: champ.delta("Flash", pygame_stuff.inaccessible_tiles(entities))
 
 
         # ALL CODE TO DRAW SHOULD GO BELOW THIS COMMENT
@@ -56,6 +66,9 @@ if __name__ == '__main__':
 
         # Draw Health Bars
         pygame_stuff.draw_health_bar(screen, champ, tile_size)
+        pygame_stuff.draw_health_bar(screen, cpu, tile_size)
+        pygame_stuff.draw_nexus_health(screen, Blue_Nex, tile_size)
+        pygame_stuff.draw_nexus_health(screen, Red_Nex, tile_size)
 
         pygame.display.flip()
 
