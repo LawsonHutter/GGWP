@@ -3,12 +3,12 @@ import pygame
 # Object class
 class champion(pygame.sprite.Sprite):
     # init
-    def __init__(self, champ, map_size):
+    def __init__(self, champ, map_size, pos):
         pygame.sprite.Sprite.__init__(self)
 
         # Member Variables For State
-        self.x = 2
-        self.y = 1
+        self.x = pos[0]
+        self.y = pos[1]
         self.tile_size = 150
         self.type = champ
         self.direction = "down"
@@ -27,7 +27,7 @@ class champion(pygame.sprite.Sprite):
 
     # List of possible Actions
     def actions(self):
-        return ["Auto", "SkillShot", "Flash", "N", "E", "S", "W"]
+        return ["A", "SkillShot", "Flash", "N", "E", "S", "W"]
 
     def delta(self, action):
         if action == "N":
