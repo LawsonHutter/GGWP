@@ -1,5 +1,4 @@
 from policy import QuantMDP, generate_policy, gw_utils
-import time
 
 import pygame
 import pygame_stuff
