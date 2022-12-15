@@ -1,4 +1,4 @@
-## Shit we need to figure out:
+## Things we need to figure out:
 * State structure
   * Position
   * Health bars and Nexus (generalized to one-shot, medium, full)
