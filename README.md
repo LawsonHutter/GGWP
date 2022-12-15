@@ -1,4 +1,4 @@
-## Shit we need to figure out:
+## Things we need to figure out:
 * State structure
   * Position
   * Health bars and Nexus (generalized to one-shot, medium, full)
@@ -15,11 +15,11 @@
 * Larger grid, tune cpu ai.  Potentially look at the concurrent time game optimal policy papers.  Or, tune action policy.
   * Maybe have it learn player movements as time goes on
 
-## L Hutt:
+## Lawson:
 * Sprite structure / state structure
 * Pygame
 * Player input
 
-## K-Slayer:
+## Kevin:
 * ggsolver stuff
 * cpu player
